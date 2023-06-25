@@ -41,6 +41,8 @@ class DatabaseHelper {
         overview TEXT,
         poster_path TEXT
       );
+    ''');
+    await db.execute('''
       CREATE TABLE  $_tblWatchlistTvSeries (
         id INTEGER PRIMARY KEY,
         name TEXT,
