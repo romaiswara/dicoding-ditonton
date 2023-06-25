@@ -15,8 +15,10 @@ import 'package:ditonton/domain/usecases/movies/get_movie_recommendations.dart'
     as _i8;
 import 'package:ditonton/domain/usecases/movies/get_watchlist_status.dart'
     as _i10;
-import 'package:ditonton/domain/usecases/movies/remove_watchlist.dart' as _i12;
-import 'package:ditonton/domain/usecases/movies/save_watchlist.dart' as _i11;
+import 'package:ditonton/domain/usecases/movies/remove_watchlist_movie.dart'
+    as _i12;
+import 'package:ditonton/domain/usecases/movies/save_watchlist_movie.dart'
+    as _i11;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -147,11 +149,12 @@ class MockGetWatchListStatus extends _i1.Mock
       ) as _i5.Future<bool>);
 }
 
-/// A class which mocks [SaveWatchlist].
+/// A class which mocks [SaveWatchlistMovie].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSaveWatchlist extends _i1.Mock implements _i11.SaveWatchlist {
-  MockSaveWatchlist() {
+class MockSaveWatchlistMovie extends _i1.Mock
+    implements _i11.SaveWatchlistMovie {
+  MockSaveWatchlistMovie() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -181,11 +184,12 @@ class MockSaveWatchlist extends _i1.Mock implements _i11.SaveWatchlist {
       ) as _i5.Future<_i3.Either<_i6.Failure, String>>);
 }
 
-/// A class which mocks [RemoveWatchlist].
+/// A class which mocks [RemoveWatchlistMovie].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockRemoveWatchlist extends _i1.Mock implements _i12.RemoveWatchlist {
-  MockRemoveWatchlist() {
+class MockRemoveWatchlistMovie extends _i1.Mock
+    implements _i12.RemoveWatchlistMovie {
+  MockRemoveWatchlistMovie() {
     _i1.throwOnMissingStub(this);
   }
 
