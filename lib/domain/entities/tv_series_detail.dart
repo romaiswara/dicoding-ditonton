@@ -18,7 +18,7 @@ class TvSeriesDetail extends Equatable {
   final String? originalName;
   final String? overview;
   final String? posterPath;
-  final List<Season>? season;
+  final List<Season>? seasons;
   final double? voteAverage;
   final int? voteCount;
 
@@ -37,7 +37,7 @@ class TvSeriesDetail extends Equatable {
     this.originalName,
     this.overview,
     this.posterPath,
-    this.season,
+    this.seasons,
     this.voteAverage,
     this.voteCount,
   });
@@ -58,7 +58,7 @@ class TvSeriesDetail extends Equatable {
         originalName,
         overview,
         posterPath,
-        season,
+        seasons,
         voteAverage,
         voteCount,
       ];
