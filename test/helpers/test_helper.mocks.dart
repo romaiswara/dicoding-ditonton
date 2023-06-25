@@ -185,43 +185,43 @@ class MockMovieRepository extends _i1.Mock implements _i5.MovieRepository {
         )),
       ) as _i6.Future<_i2.Either<_i7.Failure, List<_i8.Movie>>>);
   @override
-  _i6.Future<_i2.Either<_i7.Failure, String>> saveWatchlist(
+  _i6.Future<_i2.Either<_i7.Failure, String>> saveWatchlistMovie(
           _i9.MovieDetail? movie) =>
       (super.noSuchMethod(
         Invocation.method(
-          #saveWatchlist,
+          #saveWatchlistMovie,
           [movie],
         ),
         returnValue: _i6.Future<_i2.Either<_i7.Failure, String>>.value(
             _FakeEither_0<_i7.Failure, String>(
           this,
           Invocation.method(
-            #saveWatchlist,
+            #saveWatchlistMovie,
             [movie],
           ),
         )),
       ) as _i6.Future<_i2.Either<_i7.Failure, String>>);
   @override
-  _i6.Future<_i2.Either<_i7.Failure, String>> removeWatchlist(
+  _i6.Future<_i2.Either<_i7.Failure, String>> removeWatchlistMovie(
           _i9.MovieDetail? movie) =>
       (super.noSuchMethod(
         Invocation.method(
-          #removeWatchlist,
+          #removeWatchlistMovie,
           [movie],
         ),
         returnValue: _i6.Future<_i2.Either<_i7.Failure, String>>.value(
             _FakeEither_0<_i7.Failure, String>(
           this,
           Invocation.method(
-            #removeWatchlist,
+            #removeWatchlistMovie,
             [movie],
           ),
         )),
       ) as _i6.Future<_i2.Either<_i7.Failure, String>>);
   @override
-  _i6.Future<bool> isAddedToWatchlist(int? id) => (super.noSuchMethod(
+  _i6.Future<bool> isAddedToWatchlistMovie(int? id) => (super.noSuchMethod(
         Invocation.method(
-          #isAddedToWatchlist,
+          #isAddedToWatchlistMovie,
           [id],
         ),
         returnValue: _i6.Future<bool>.value(false),
