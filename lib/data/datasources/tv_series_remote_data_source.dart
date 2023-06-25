@@ -21,13 +21,13 @@ abstract class TvSeriesRemoteDataSource {
   Future<List<TvSeriesModel>> getTvSeriesRecommendations(int id);
 }
 
-class TvSeriesDataSourceImpl implements TvSeriesRemoteDataSource {
+class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
   static const API_KEY = 'api_key=2174d146bb9c0eab47529b2e77d6b526';
   static const BASE_URL = 'https://api.themoviedb.org/3';
 
   final http.Client client;
 
-  TvSeriesDataSourceImpl({required this.client});
+  TvSeriesRemoteDataSourceImpl({required this.client});
 
   @override
   Future<List<TvSeriesModel>> getAiringTodayTvSeries() async {
