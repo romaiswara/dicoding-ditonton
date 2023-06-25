@@ -10,7 +10,6 @@ class TvSeries extends Equatable {
   final String? originalLanguage;
   final String? originalName;
   final String? overview;
-  final String? popularity;
   final String? posterPath;
   final double? voteAverage;
   final int? voteCount;
@@ -25,7 +24,6 @@ class TvSeries extends Equatable {
     this.originalLanguage,
     this.originalName,
     this.overview,
-    this.popularity,
     this.posterPath,
     this.voteAverage,
     this.voteCount,
@@ -42,7 +40,6 @@ class TvSeries extends Equatable {
         originalLanguage,
         originalName,
         overview,
-        popularity,
         posterPath,
         voteAverage,
         voteCount,
