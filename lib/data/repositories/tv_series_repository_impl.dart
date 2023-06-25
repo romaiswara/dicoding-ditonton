@@ -10,11 +10,11 @@ import 'package:ditonton/domain/entities/tv_series.dart';
 import 'package:ditonton/domain/entities/tv_series_detail.dart';
 import 'package:ditonton/domain/repositories/tv_series_repository.dart';
 
-class TvSeriesImpl implements TvSeriesRepository {
+class TvSeriesRepositoryImpl implements TvSeriesRepository {
   final TvSeriesRemoteDataSource remoteDataSource;
   final TvSeriesLocalDataSource localDataSource;
 
-  TvSeriesImpl({
+  TvSeriesRepositoryImpl({
     required this.remoteDataSource,
     required this.localDataSource,
   });
