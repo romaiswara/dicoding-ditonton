@@ -10,6 +10,7 @@ class Episode extends Equatable {
   final int? episodeNumber;
   final String? productionCode;
   final int? seasonNumber;
+  final String? stillPath;
 
   Episode({
     required this.id,
@@ -21,6 +22,7 @@ class Episode extends Equatable {
     this.episodeNumber,
     this.productionCode,
     this.seasonNumber,
+    this.stillPath,
   });
 
   @override
@@ -34,5 +36,6 @@ class Episode extends Equatable {
         episodeNumber,
         productionCode,
         seasonNumber,
+        stillPath,
       ];
 }
