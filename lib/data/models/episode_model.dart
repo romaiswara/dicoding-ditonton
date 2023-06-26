@@ -11,6 +11,7 @@ class EpisodeModel extends Equatable {
   final int? episodeNumber;
   final String? productionCode;
   final int? seasonNumber;
+  final int? runtime;
   final String? stillPath;
 
   EpisodeModel({
@@ -23,6 +24,7 @@ class EpisodeModel extends Equatable {
     this.episodeNumber,
     this.productionCode,
     this.seasonNumber,
+    this.runtime,
     this.stillPath,
   });
 
@@ -37,6 +39,7 @@ class EpisodeModel extends Equatable {
       episodeNumber: json['episode_number'],
       productionCode: json['production_code'],
       seasonNumber: json['season_number'],
+      runtime: json['runtime'],
       stillPath: json['still_path'],
     );
   }
@@ -52,6 +55,7 @@ class EpisodeModel extends Equatable {
       'episode_number': episodeNumber,
       'production_code': productionCode,
       'season_number': seasonNumber,
+      'runtime': runtime,
       'still_path': stillPath,
     };
   }
@@ -67,6 +71,7 @@ class EpisodeModel extends Equatable {
       episodeNumber: episodeNumber,
       productionCode: productionCode,
       seasonNumber: seasonNumber,
+      runtime: runtime,
       stillPath: stillPath,
     );
   }
@@ -82,6 +87,7 @@ class EpisodeModel extends Equatable {
         episodeNumber,
         productionCode,
         seasonNumber,
+        runtime,
         stillPath,
       ];
 }
