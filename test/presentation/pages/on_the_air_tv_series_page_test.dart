@@ -8,6 +8,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 
+import '../../dummy_data/dummy_objects.dart';
 import 'on_the_air_tv_series_page_test.mocks.dart';
 
 @GenerateMocks([OnTheAirTvSeriesNotifier])
@@ -43,7 +44,8 @@ void main() {
   testWidgets('Page should display when data is loaded',
       (WidgetTester tester) async {
     when(mockOnTheAirTvSeriesNotifier.state).thenReturn(RequestState.Loaded);
-    when(mockOnTheAirTvSeriesNotifier.tvSeries).thenReturn(<TvSeries>[]);
+    when(mockOnTheAirTvSeriesNotifier.tvSeries)
+        .thenReturn(<TvSeries>[tvSeriesTest]);
 
     final listViewFinder = find.byType(ListView);
 
