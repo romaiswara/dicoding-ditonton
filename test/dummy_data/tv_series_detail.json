@@ -33,7 +33,7 @@
     "show_id": 31910,
     "still_path": "/1swhNPNh16f1B6ZqEAmCg7mkWSn.jpg"
   },
-  "name": "Naruto Shippūden",
+  "name": "Naruto Shippuden",
   "next_episode_to_air": null,
   "networks": [
     {
@@ -49,7 +49,7 @@
     "JP"
   ],
   "original_language": "ja",
-  "original_name": "ナルト 疾風伝",
+  "original_name": "Naruto Shippuden",
   "overview": "Overview!",
   "popularity": 159.606,
   "poster_path": "/zAYRe2bJxpWTVrwwmBc00VFkAf4.jpg",
@@ -82,7 +82,7 @@
     {
       "english_name": "Japanese",
       "iso_639_1": "ja",
-      "name": "日本語"
+      "name": "name"
     }
   ],
   "status": "Ended",

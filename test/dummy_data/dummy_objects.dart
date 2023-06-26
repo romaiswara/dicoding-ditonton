@@ -1,4 +1,5 @@
 import 'package:ditonton/data/models/movie_table.dart';
+import 'package:ditonton/data/models/tv_series_table.dart';
 import 'package:ditonton/domain/entities/episode.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
@@ -71,7 +72,7 @@ final TvSeries tvSeriesTest = TvSeries(
   name: 'One Piece',
   originCountry: ['JP'],
   originalLanguage: 'ja',
-  originalName: 'ワンピース',
+  originalName: 'One Piece',
   overview: 'Overview!',
   posterPath: '/dum1wnm6kJOUos0XJqjB8s2UWi9.jpg',
   voteAverage: 8.7,
@@ -86,7 +87,7 @@ final TvSeries tvSeriesRecommendationTest = TvSeries(
   name: 'Naruto',
   originCountry: ['JP'],
   originalLanguage: 'ja',
-  originalName: 'ナルト',
+  originalName: 'Naruto',
   overview: 'Overview!',
   posterPath: '/xppeysfvDKVx775MFuH8Z9BlpMk.jpg',
   voteAverage: 8.4,
@@ -101,7 +102,7 @@ final TvSeries tvSeriesSearchTest = TvSeries(
   name: 'Naruto',
   originCountry: ['JP'],
   originalLanguage: 'ja',
-  originalName: 'ナルト',
+  originalName: 'Naruto',
   overview: 'Overview!',
   posterPath: '/xppeysfvDKVx775MFuH8Z9BlpMk.jpg',
   voteAverage: 8.4,
@@ -129,11 +130,11 @@ final TvSeriesDetail tvSeriesDetailTest = TvSeriesDetail(
     seasonNumber: 20,
     stillPath: '/1swhNPNh16f1B6ZqEAmCg7mkWSn.jpg',
   ),
-  name: 'Naruto Shippūden',
+  name: 'Naruto Shippuden',
   nextEpisodeToAir: null,
   numberOfEpisodes: 500,
   numberOfSeasons: 20,
-  originalName: 'ナルト 疾風伝',
+  originalName: 'Naruto Shippuden',
   overview: 'Overview!',
   posterPath: '/zAYRe2bJxpWTVrwwmBc00VFkAf4.jpg',
   seasons: [
@@ -150,3 +151,17 @@ final TvSeriesDetail tvSeriesDetailTest = TvSeriesDetail(
   voteAverage: 8.556,
   voteCount: 7586,
 );
+
+final TvSeriesTable tvSeriesTableTest = TvSeriesTable(
+  id: 1,
+  name: 'Naruto',
+  posterPath: 'posterPath',
+  overview: 'Overview',
+);
+
+final Map<String, dynamic> tvSeriesTableTestMap = {
+  'id': 1,
+  'name': 'Naruto',
+  'poster_path': 'posterPath',
+  'overview': 'Overview',
+};
