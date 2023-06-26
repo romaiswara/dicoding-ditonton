@@ -1,0 +1,28 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/xuJ0F9RfKvVSJNDg2usurQ9WvY5.jpg",
+      "id": 46260,
+      "name": "Naruto",
+      "original_language": "ja",
+      "original_name": "ナルト",
+      "overview": "Overview!",
+      "poster_path": "/xppeysfvDKVx775MFuH8Z9BlpMk.jpg",
+      "media_type": "tv",
+      "genre_ids": [
+        16
+      ],
+      "popularity": 211.281,
+      "first_air_date": "2002-10-03",
+      "vote_average": 8.4,
+      "vote_count": 5091,
+      "origin_country": [
+        "JP"
+      ]
+    }
+  ],
+  "total_pages": 2,
+  "total_results": 40
+}

@@ -1,0 +1,26 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "backdrop_path": "/a6ptrTUH1c5OdWanjyYtAkOuYD0.jpg",
+      "first_air_date": "1999-10-20",
+      "genre_ids": [
+        16
+      ],
+      "id": 37854,
+      "name": "One Piece",
+      "origin_country": [
+        "JP"
+      ],
+      "original_language": "ja",
+      "original_name": "ワンピース",
+      "overview": "Overview!",
+      "popularity": 158.878,
+      "poster_path": "/dum1wnm6kJOUos0XJqjB8s2UWi9.jpg",
+      "vote_average": 8.7,
+      "vote_count": 3790
+    }
+  ],
+  "total_pages": 10,
+  "total_results": 199
+}
