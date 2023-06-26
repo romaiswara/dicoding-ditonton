@@ -31,6 +31,10 @@ void main() {
     dataSource = TvSeriesRemoteDataSourceImpl(client: mockHttpClient);
   });
 
+  /// TODO: utk test throw error ny masih gagal
+  ///
+  /// kira2 kenapa ya kak ?, padahal udah sama dengan movie remote data source
+  /// saya udah coba print di else, print ny udah masuk, tpi expect ny masih gagal kak
   group('get airing today tv series', () {
     test('should return list of tv series when the response code is 200',
         () async {
@@ -53,7 +57,7 @@ void main() {
         // act
         final call = await dataSource.getAiringTodayTvSeries();
         // assert
-        expect(() => call, throwsA(isA<ServerException>));
+        expect(() => call, throwsA(isA<ServerException>()));
       },
       skip: true,
     );
@@ -80,7 +84,7 @@ void main() {
         // act
         final call = await dataSource.getOnTheAirTvSeries();
         // assert
-        expect(() => call, throwsA(isA<ServerException>));
+        expect(() => call, throwsA(isA<ServerException>()));
       },
       skip: true,
     );
@@ -107,7 +111,7 @@ void main() {
         // act
         final call = await dataSource.getPopularTvSeries();
         // assert
-        expect(() => call, throwsA(isA<ServerException>));
+        expect(() => call, throwsA(isA<ServerException>()));
       },
       skip: true,
     );
@@ -134,7 +138,7 @@ void main() {
         // act
         final call = await dataSource.getTopRatedTvSeries();
         // assert
-        expect(() => call, throwsA(isA<ServerException>));
+        expect(() => call, throwsA(isA<ServerException>()));
       },
       skip: true,
     );
@@ -161,7 +165,7 @@ void main() {
         // act
         final call = await dataSource.getTvSeriesDetail(dummyId);
         // assert
-        expect(() => call, throwsA(isA<ServerException>));
+        expect(() => call, throwsA(isA<ServerException>()));
       },
       skip: true,
     );
@@ -191,7 +195,7 @@ void main() {
         // act
         final call = await dataSource.getTvSeriesRecommendations(dummyId);
         // assert
-        expect(() => call, throwsA(isA<ServerException>));
+        expect(() => call, throwsA(isA<ServerException>()));
       },
       skip: true,
     );
@@ -220,7 +224,8 @@ void main() {
         // act
         final call = await dataSource.searchTvSeries(dummyQuery);
         // assert
-        expect(() => call, throwsA(isA<ServerException>));
+        expect(() => call, throwsA(isA<ServerException>()));
+        // expect(() => call, isInstanceOf<ServerException>());
       },
       skip: true,
     );
