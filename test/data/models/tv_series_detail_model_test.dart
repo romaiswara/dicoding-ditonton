@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:ditonton/data/models/episode_model.dart';
+import 'package:ditonton/data/models/genre_model.dart';
+import 'package:ditonton/data/models/season_model.dart';
 import 'package:ditonton/data/models/tv_series_detail_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -7,7 +10,50 @@ import '../../dummy_data/dummy_objects.dart';
 import '../../json_reader.dart';
 
 void main() {
-  final dummyTvSeriesDetail = tvSeriesDetailTest;
+  final dummyTvSeriesDetailEntity = tvSeriesDetailTest;
+
+  final dummyTvSeriesDetailModel = TvSeriesDetailModel(
+    adult: false,
+    backdropPath: '/z0YhJvomqedHF85bplUJEotkN5l.jpg',
+    firstAirDate: '2007-02-15',
+    genres: [GenreModel(id: 16, name: 'Animation')],
+    id: 31910,
+    lastAirDate: '2017-03-23',
+    lastEpisodeToAir: EpisodeModel(
+      id: 1404128,
+      name:
+          'Hidden Leaf Story, The Perfect Day for a Wedding, Part 7: The Message',
+      overview: 'Overview!',
+      voteAverage: 6.5,
+      voteCount: 6,
+      airDate: '2017-03-23',
+      episodeNumber: 500,
+      productionCode: '',
+      runtime: 25,
+      seasonNumber: 20,
+      stillPath: '/1swhNPNh16f1B6ZqEAmCg7mkWSn.jpg',
+    ),
+    name: 'Naruto Shippuden',
+    nextEpisodeToAir: null,
+    numberOfEpisodes: 500,
+    numberOfSeasons: 20,
+    originalName: 'Naruto Shippuden',
+    overview: 'Overview!',
+    posterPath: '/zAYRe2bJxpWTVrwwmBc00VFkAf4.jpg',
+    seasons: [
+      SeasonModel(
+        airDate: '2007-02-15',
+        episodeCount: 32,
+        id: 43373,
+        name: 'Kazekage Rescue',
+        overview: 'Overview!',
+        posterPath: '/xSMgujXu00no2m1CCaMr4e6tARZ.jpg',
+        seasonNumber: 1,
+      ),
+    ],
+    voteAverage: 8.556,
+    voteCount: 7586,
+  );
 
   final dummyTvSeriesDetailMap = {
     'adult': false,
@@ -66,16 +112,20 @@ void main() {
     final result = TvSeriesDetailModel.fromJson(jsonMap);
 
     // assert
-    expect(result.toEntity(), dummyTvSeriesDetail);
+    expect(result.toEntity(), dummyTvSeriesDetailEntity);
+  });
+
+  test('should return a valid model from dummyTvSeriesDetailMap', () async {
+    // act
+    final result = TvSeriesDetailModel.fromJson(dummyTvSeriesDetailMap);
+
+    // assert
+    expect(result, dummyTvSeriesDetailModel);
   });
 
   test('should return map when call toJson()', () async {
-    // arrange
-    final Map<String, dynamic> jsonMap =
-        json.decode(readJson('dummy_data/tv_series_detail.json'));
-
     // act
-    final result = TvSeriesDetailModel.fromJson(jsonMap).toJson();
+    final result = dummyTvSeriesDetailModel.toJson();
 
     // assert
     expect(result, dummyTvSeriesDetailMap);
