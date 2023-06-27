@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:ditonton/data/models/movie_table.dart';
-import 'package:ditonton/data/models/tv_series_table.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
@@ -16,9 +14,7 @@ class DatabaseHelper {
   static Database? _database;
 
   Future<Database?> get database async {
-    if (_database == null) {
-      _database = await _initDb();
-    }
+    _database ??= await _initDb();
     return _database;
   }
 
@@ -52,17 +48,17 @@ class DatabaseHelper {
     ''');
   }
 
-  Future<int> insertMovieWatchlist(MovieTable movie) async {
+  Future<int> insertMovieWatchlist(Map<String, dynamic> data) async {
     final db = await database;
-    return await db!.insert(_tblWatchlistMovie, movie.toJson());
+    return await db!.insert(_tblWatchlistMovie, data);
   }
 
-  Future<int> removeMovieWatchlist(MovieTable movie) async {
+  Future<int> removeMovieWatchlist(int movieId) async {
     final db = await database;
     return await db!.delete(
       _tblWatchlistMovie,
       where: 'id = ?',
-      whereArgs: [movie.id],
+      whereArgs: [movieId],
     );
   }
 
@@ -89,17 +85,17 @@ class DatabaseHelper {
     return results;
   }
 
-  Future<int> insertTvSeriesWatchlist(TvSeriesTable tvSeries) async {
+  Future<int> insertTvSeriesWatchlist(Map<String, dynamic> data) async {
     final db = await database;
-    return await db!.insert(_tblWatchlistTvSeries, tvSeries.toJson());
+    return await db!.insert(_tblWatchlistTvSeries, data);
   }
 
-  Future<int> removeTvSeriesWatchlist(TvSeriesTable tvSeries) async {
+  Future<int> removeTvSeriesWatchlist(int tvSeriesId) async {
     final db = await database;
     return await db!.delete(
       _tblWatchlistTvSeries,
       where: 'id = ?',
-      whereArgs: [tvSeries.id],
+      whereArgs: [tvSeriesId],
     );
   }
 
