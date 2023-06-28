@@ -19,6 +19,7 @@ class TvSeriesDetail extends Equatable {
   final List<Season>? seasons;
   final double? voteAverage;
   final int? voteCount;
+  final List<TvSeries>? recommendations;
 
   const TvSeriesDetail({
     this.adult,
@@ -38,7 +39,33 @@ class TvSeriesDetail extends Equatable {
     this.seasons,
     this.voteAverage,
     this.voteCount,
+    this.recommendations,
   });
+
+  TvSeriesDetail updateRecommendations({
+    required List<TvSeries> recommendations,
+  }) {
+    return TvSeriesDetail(
+      adult: adult,
+      backdropPath: backdropPath,
+      firstAirDate: firstAirDate,
+      genres: genres,
+      id: id,
+      lastAirDate: lastAirDate,
+      lastEpisodeToAir: lastEpisodeToAir,
+      name: name,
+      nextEpisodeToAir: nextEpisodeToAir,
+      numberOfEpisodes: numberOfEpisodes,
+      numberOfSeasons: numberOfSeasons,
+      originalName: originalName,
+      overview: overview,
+      posterPath: posterPath,
+      seasons: seasons,
+      voteAverage: voteAverage,
+      voteCount: voteCount,
+      recommendations: recommendations,
+    );
+  }
 
   @override
   List<Object?> get props => [
@@ -59,5 +86,6 @@ class TvSeriesDetail extends Equatable {
         seasons,
         voteAverage,
         voteCount,
+        recommendations,
       ];
 }

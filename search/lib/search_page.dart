@@ -59,12 +59,10 @@ class _SearchPageState extends State<SearchPage>
               ),
               onSubmitted: (query) {
                 // tv series
-                Provider.of<TvSeriesSearchNotifier>(context, listen: false)
-                    .fetchTvSeriesSearch(query);
+                context.read<TvSeriesSearchCubit>().get(query: query);
 
                 // movie
-                Provider.of<MovieSearchNotifier>(context, listen: false)
-                    .fetchMovieSearch(query);
+                context.read<MovieSearchCubit>().get(query: query);
               },
             ),
           ),

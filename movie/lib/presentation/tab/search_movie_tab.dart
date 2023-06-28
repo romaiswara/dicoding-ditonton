@@ -1,7 +1,8 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie/domain/domain.dart';
 import 'package:movie/presentation/presentation.dart';
-import 'package:provider/provider.dart';
 
 class SearchMovieTab extends StatelessWidget {
   const SearchMovieTab({Key? key}) : super(key: key);
@@ -17,29 +18,37 @@ class SearchMovieTab extends StatelessWidget {
             'Search Result',
             style: kHeading6,
           ),
-          Consumer<MovieSearchNotifier>(
-            builder: (context, data, child) {
-              if (data.state == RequestState.Loading) {
+          BlocBuilder<MovieSearchCubit, BaseState<List<Movie>>>(
+            builder: (context, state) {
+              if (state is LoadingState) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              } else if (data.state == RequestState.Loaded) {
-                final result = data.searchResult;
+              }
+              if (state is ErrorState) {
+                return const Center(
+                  child: Text('Terjadi kesalahan!'),
+                );
+              }
+              if (state is EmptyState) {
+                return const Center(
+                  child: Text('Tidak ada data!'),
+                );
+              }
+              if (state is LoadedState) {
+                final List<Movie> data = state.data ?? [];
                 return Expanded(
                   child: ListView.builder(
                     padding: const EdgeInsets.all(8),
                     itemBuilder: (context, index) {
-                      final movie = data.searchResult[index];
+                      final movie = data[index];
                       return MovieCard(movie);
                     },
-                    itemCount: result.length,
+                    itemCount: data.length,
                   ),
                 );
-              } else {
-                return Expanded(
-                  child: Container(),
-                );
               }
+              return const SizedBox();
             },
           ),
         ],

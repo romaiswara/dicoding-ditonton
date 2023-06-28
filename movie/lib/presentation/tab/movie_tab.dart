@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie/domain/domain.dart';
 import 'package:movie/presentation/presentation.dart';
-import 'package:provider/provider.dart';
 
 class MovieTab extends StatelessWidget {
   const MovieTab({Key? key}) : super(key: key);
@@ -20,18 +20,30 @@ class MovieTab extends StatelessWidget {
               'Now Playing',
               style: kHeading6,
             ),
-            Consumer<MovieListNotifier>(builder: (context, data, child) {
-              final state = data.nowPlayingState;
-              if (state == RequestState.Loading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state == RequestState.Loaded) {
-                return MovieList(data.nowPlayingMovies);
-              } else {
-                return const Text('Failed');
-              }
-            }),
+            BlocBuilder<NowPlayingMoviesCubit, BaseState<List<Movie>>>(
+              builder: (context, state) {
+                if (state is LoadingState) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is ErrorState) {
+                  return const Center(
+                    child: Text('Terjadi kesalahan!'),
+                  );
+                }
+                if (state is EmptyState) {
+                  return const Center(
+                    child: Text('Tidak ada data!'),
+                  );
+                }
+                if (state is LoadedState) {
+                  final List<Movie> data = state.data ?? [];
+                  return MovieList(data);
+                }
+                return const SizedBox();
+              },
+            ),
             _buildSubHeading(
               title: 'Popular',
               onTap: () => Navigator.pushNamed(
@@ -39,18 +51,30 @@ class MovieTab extends StatelessWidget {
                 popularMoviesRoute,
               ),
             ),
-            Consumer<MovieListNotifier>(builder: (context, data, child) {
-              final state = data.popularMoviesState;
-              if (state == RequestState.Loading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state == RequestState.Loaded) {
-                return MovieList(data.popularMovies);
-              } else {
-                return const Text('Failed');
-              }
-            }),
+            BlocBuilder<PopularMoviesCubit, BaseState<List<Movie>>>(
+              builder: (context, state) {
+                if (state is LoadingState) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is ErrorState) {
+                  return const Center(
+                    child: Text('Terjadi kesalahan!'),
+                  );
+                }
+                if (state is EmptyState) {
+                  return const Center(
+                    child: Text('Tidak ada data!'),
+                  );
+                }
+                if (state is LoadedState) {
+                  final List<Movie> data = state.data ?? [];
+                  return MovieList(data);
+                }
+                return const SizedBox();
+              },
+            ),
             _buildSubHeading(
               title: 'Top Rated',
               onTap: () => Navigator.pushNamed(
@@ -58,18 +82,30 @@ class MovieTab extends StatelessWidget {
                 topRatedMoviesRoute,
               ),
             ),
-            Consumer<MovieListNotifier>(builder: (context, data, child) {
-              final state = data.topRatedMoviesState;
-              if (state == RequestState.Loading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state == RequestState.Loaded) {
-                return MovieList(data.topRatedMovies);
-              } else {
-                return const Text('Failed');
-              }
-            }),
+            BlocBuilder<TopRatedMoviesCubit, BaseState<List<Movie>>>(
+              builder: (context, state) {
+                if (state is LoadingState) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is ErrorState) {
+                  return const Center(
+                    child: Text('Terjadi kesalahan!'),
+                  );
+                }
+                if (state is EmptyState) {
+                  return const Center(
+                    child: Text('Tidak ada data!'),
+                  );
+                }
+                if (state is LoadedState) {
+                  final List<Movie> data = state.data ?? [];
+                  return MovieList(data);
+                }
+                return const SizedBox();
+              },
+            ),
           ],
         ),
       ),

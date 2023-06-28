@@ -24,15 +24,8 @@ class _WatchlistPageState extends State<WatchlistPage>
   void initState() {
     tabController = TabController(length: 2, vsync: this);
 
-    Future.microtask(() {
-      // tv series
-      Provider.of<WatchlistTvSeriesNotifier>(context, listen: false)
-          .fetchWatchlistTvSeries();
-
-      // movie
-      Provider.of<WatchlistMovieNotifier>(context, listen: false)
-          .fetchWatchlistMovies();
-    });
+    context.read<WatchlistTvSeriesCubit>().get();
+    context.read<WatchlistMoviesCubit>().get();
 
     super.initState();
   }
@@ -52,13 +45,8 @@ class _WatchlistPageState extends State<WatchlistPage>
 
   @override
   void didPopNext() {
-    // tv series
-    Provider.of<WatchlistTvSeriesNotifier>(context, listen: false)
-        .fetchWatchlistTvSeries();
-
-    // movie
-    Provider.of<WatchlistMovieNotifier>(context, listen: false)
-        .fetchWatchlistMovies();
+    context.read<WatchlistTvSeriesCubit>().get();
+    context.read<WatchlistMoviesCubit>().get();
   }
 
   @override

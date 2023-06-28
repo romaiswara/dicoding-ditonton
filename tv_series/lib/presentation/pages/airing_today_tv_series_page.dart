@@ -1,6 +1,6 @@
-import 'package:core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tv_series/domain/domain.dart';
 import 'package:tv_series/presentation/presentation.dart';
 
 class AiringTodayTvSeriesPage extends StatefulWidget {
@@ -14,10 +14,8 @@ class AiringTodayTvSeriesPage extends StatefulWidget {
 class _AiringTodayTvSeriesPageState extends State<AiringTodayTvSeriesPage> {
   @override
   void initState() {
+    context.read<AiringTodayTvSeriesCubit>().get();
     super.initState();
-    Future.microtask(() =>
-        Provider.of<AiringTodayTvSeriesNotifier>(context, listen: false)
-            .fetchAiringTodayTvSeries());
   }
 
   @override
@@ -28,26 +26,34 @@ class _AiringTodayTvSeriesPageState extends State<AiringTodayTvSeriesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<AiringTodayTvSeriesNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
+        child: BlocBuilder<AiringTodayTvSeriesCubit, BaseState<List<TvSeries>>>(
+          builder: (context, state) {
+            if (state is LoadingState) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.state == RequestState.Loaded) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  final tvSeries = data.tvSeries[index];
-                  return TvSeriesCard(tvSeries);
-                },
-                itemCount: data.tvSeries.length,
-              );
-            } else {
-              return Center(
-                key: const Key('error_message'),
-                child: Text(data.message),
+            }
+            if (state is ErrorState) {
+              return const Center(
+                child: Text('Terjadi kesalahan!'),
               );
             }
+            if (state is EmptyState) {
+              return const Center(
+                child: Text('Tidak ada data!'),
+              );
+            }
+            if (state is LoadedState) {
+              final List<TvSeries> data = state.data ?? [];
+              return ListView.builder(
+                itemBuilder: (context, index) {
+                  final tvSeries = data[index];
+                  return TvSeriesCard(tvSeries);
+                },
+                itemCount: data.length,
+              );
+            }
+            return const SizedBox();
           },
         ),
       ),

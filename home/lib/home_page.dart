@@ -23,17 +23,15 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     Future.microtask(() {
       // get tv series
-      Provider.of<TvSeriesListNotifier>(context, listen: false)
-        ..fetchAiringTodayTvSeries()
-        ..fetchOnTheAirTvSeries()
-        ..fetchPopularTvSeries()
-        ..fetchTopRatedTvSeries();
+      context.read<AiringTodayTvSeriesCubit>().get();
+      context.read<OnTheAirTvSeriesCubit>().get();
+      context.read<PopularTvSeriesCubit>().get();
+      context.read<TopRatedTvSeriesCubit>().get();
 
       // get movies
-      Provider.of<MovieListNotifier>(context, listen: false)
-        ..fetchNowPlayingMovies()
-        ..fetchPopularMovies()
-        ..fetchTopRatedMovies();
+      context.read<NowPlayingMoviesCubit>().get();
+      context.read<PopularMoviesCubit>().get();
+      context.read<TopRatedMoviesCubit>().get();
     });
 
     super.initState();

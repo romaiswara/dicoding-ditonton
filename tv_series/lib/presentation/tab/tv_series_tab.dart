@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv_series/domain/domain.dart';
 import 'package:tv_series/presentation/presentation.dart';
 
@@ -23,18 +23,33 @@ class TvSeriesTab extends StatelessWidget {
                 airingTodayTvSeriesRoute,
               ),
             ),
-            Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
-              final state = data.airingTodayState;
-              if (state == RequestState.Loading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state == RequestState.Loaded) {
-                return TvSeriesList(data.airingTodayTvSeries);
-              } else {
-                return const Text('Failed');
-              }
-            }),
+
+            /// airing today
+            BlocBuilder<AiringTodayTvSeriesCubit, BaseState<List<TvSeries>>>(
+              builder: (context, state) {
+                if (state is LoadingState) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is ErrorState) {
+                  return const Center(
+                    child: Text('Terjadi kesalahan!'),
+                  );
+                }
+                if (state is EmptyState) {
+                  return const Center(
+                    child: Text('Tidak ada data!'),
+                  );
+                }
+                if (state is LoadedState) {
+                  final List<TvSeries> data = state.data ?? [];
+                  return TvSeriesList(data);
+                }
+                return const SizedBox();
+              },
+            ),
+
             _buildSubHeading(
               title: 'On The Air',
               onTap: () => Navigator.pushNamed(
@@ -42,18 +57,32 @@ class TvSeriesTab extends StatelessWidget {
                 onTheAirTvSeriesRoute,
               ),
             ),
-            Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
-              final state = data.onTheAirState;
-              if (state == RequestState.Loading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state == RequestState.Loaded) {
-                return TvSeriesList(data.onTheAirTvSeries);
-              } else {
-                return const Text('Failed');
-              }
-            }),
+
+            BlocBuilder<OnTheAirTvSeriesCubit, BaseState<List<TvSeries>>>(
+              builder: (context, state) {
+                if (state is LoadingState) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is ErrorState) {
+                  return const Center(
+                    child: Text('Terjadi kesalahan!'),
+                  );
+                }
+                if (state is EmptyState) {
+                  return const Center(
+                    child: Text('Tidak ada data!'),
+                  );
+                }
+                if (state is LoadedState) {
+                  final List<TvSeries> data = state.data ?? [];
+                  return TvSeriesList(data);
+                }
+                return const SizedBox();
+              },
+            ),
+
             _buildSubHeading(
               title: 'Popular',
               onTap: () => Navigator.pushNamed(
@@ -61,18 +90,32 @@ class TvSeriesTab extends StatelessWidget {
                 popularTvSeriesRoute,
               ),
             ),
-            Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
-              final state = data.popularState;
-              if (state == RequestState.Loading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state == RequestState.Loaded) {
-                return TvSeriesList(data.popularTvSeries);
-              } else {
-                return const Text('Failed');
-              }
-            }),
+
+            BlocBuilder<PopularTvSeriesCubit, BaseState<List<TvSeries>>>(
+              builder: (context, state) {
+                if (state is LoadingState) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is ErrorState) {
+                  return const Center(
+                    child: Text('Terjadi kesalahan!'),
+                  );
+                }
+                if (state is EmptyState) {
+                  return const Center(
+                    child: Text('Tidak ada data!'),
+                  );
+                }
+                if (state is LoadedState) {
+                  final List<TvSeries> data = state.data ?? [];
+                  return TvSeriesList(data);
+                }
+                return const SizedBox();
+              },
+            ),
+
             _buildSubHeading(
               title: 'Top Rated',
               onTap: () => Navigator.pushNamed(
@@ -80,18 +123,31 @@ class TvSeriesTab extends StatelessWidget {
                 topRatedTvSeriesRoute,
               ),
             ),
-            Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
-              final state = data.topRatedState;
-              if (state == RequestState.Loading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state == RequestState.Loaded) {
-                return TvSeriesList(data.topRatedTvSeries);
-              } else {
-                return const Text('Failed');
-              }
-            }),
+
+            BlocBuilder<TopRatedTvSeriesCubit, BaseState<List<TvSeries>>>(
+              builder: (context, state) {
+                if (state is LoadingState) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is ErrorState) {
+                  return const Center(
+                    child: Text('Terjadi kesalahan!'),
+                  );
+                }
+                if (state is EmptyState) {
+                  return const Center(
+                    child: Text('Tidak ada data!'),
+                  );
+                }
+                if (state is LoadedState) {
+                  final List<TvSeries> data = state.data ?? [];
+                  return TvSeriesList(data);
+                }
+                return const SizedBox();
+              },
+            ),
           ],
         ),
       ),
@@ -121,9 +177,9 @@ class TvSeriesTab extends StatelessWidget {
 }
 
 class TvSeriesList extends StatelessWidget {
-  final List<TvSeries> tvSerieses;
+  final List<TvSeries> tvSeriesList;
 
-  const TvSeriesList(this.tvSerieses, {super.key});
+  const TvSeriesList(this.tvSeriesList, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +188,7 @@ class TvSeriesList extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          final tvSeries = tvSerieses[index];
+          final tvSeries = tvSeriesList[index];
           return Container(
             padding: const EdgeInsets.all(8),
             child: InkWell(
@@ -156,7 +212,7 @@ class TvSeriesList extends StatelessWidget {
             ),
           );
         },
-        itemCount: tvSerieses.length,
+        itemCount: tvSeriesList.length,
       ),
     );
   }
