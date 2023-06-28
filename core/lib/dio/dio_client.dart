@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:core/core.dart';
@@ -26,26 +25,27 @@ class DioClient {
       InterceptorsWrapper(
         onRequest: (options, handler) {
           try {
-            log("${options.uri.toString()}\n${options.queryParameters}\n${options.data}");
+            print("onRequest: ${options.uri.toString()}");
 
             return handler.next(options);
           } catch (e) {
-            log("$options");
+            print("onRequest error: $options");
             return handler.next(options);
           }
         },
         onResponse: (response, handler) {
           try {
-            log("${response.statusCode}\n${response.data}");
+            print(
+                "onResponse status code: ${response.statusCode} - data: ${response.data}");
             return handler.next(response);
           } catch (e) {
-            log("$response");
+            print("onResponse error: $response");
             return handler.next(response);
           }
         },
         onError: (DioException e, handler) {
-          log("$e");
-          log("${e.response}");
+          print("onError: $e");
+          print("onError: ${e.response}");
           return handler.next(e);
         },
       ),
