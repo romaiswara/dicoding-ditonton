@@ -1,13 +1,11 @@
-import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/presentation/pages/search_tab/search_movie_tab.dart';
-import 'package:ditonton/presentation/pages/search_tab/search_tv_series_tab.dart';
-import 'package:ditonton/presentation/provider/movie_search_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_series_search_notifier.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:movie/movie.dart';
 import 'package:provider/provider.dart';
+import 'package:tv_series/tv_series.dart';
 
 class SearchPage extends StatefulWidget {
-  static const ROUTE_NAME = '/search';
+  const SearchPage({super.key});
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -17,7 +15,7 @@ class _SearchPageState extends State<SearchPage>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
 
-  final List<Widget> children = [
+  final List<Widget> children = const [
     SearchTvSeriesTab(),
     SearchMovieTab(),
   ];
@@ -47,9 +45,9 @@ class _SearchPageState extends State<SearchPage>
           ),
           child: Center(
             child: TextField(
-              style: TextStyle(color: Colors.black54),
+              style: const TextStyle(color: Colors.black54),
               textInputAction: TextInputAction.search,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefix: SizedBox(width: 16),
                 suffixIcon: Icon(
                   Icons.search,
@@ -74,7 +72,7 @@ class _SearchPageState extends State<SearchPage>
         bottom: TabBar(
           controller: tabController,
           indicatorColor: kMikadoYellow,
-          tabs: [
+          tabs: const [
             Tab(text: 'Tv Series'),
             Tab(text: 'Movies'),
           ],
