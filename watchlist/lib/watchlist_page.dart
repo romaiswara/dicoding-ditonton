@@ -1,15 +1,10 @@
-import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/common/utils.dart';
-import 'package:ditonton/presentation/pages/watchlist_tab/watchlist_movie_tab.dart';
-import 'package:ditonton/presentation/pages/watchlist_tab/watchlist_tv_series_tab.dart';
-import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
-import 'package:ditonton/presentation/provider/watchlist_tv_series_notifier.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:movie/movie.dart';
 import 'package:provider/provider.dart';
+import 'package:tv_series/tv_series.dart';
 
 class WatchlistPage extends StatefulWidget {
-  static const ROUTE_NAME = '/watchlist';
-
   const WatchlistPage({Key? key}) : super(key: key);
 
   @override
@@ -21,8 +16,8 @@ class _WatchlistPageState extends State<WatchlistPage>
   late TabController tabController;
 
   final List<Widget> children = [
-    WatchlistTvSeriesTab(),
-    WatchlistMovieTab(),
+    const WatchlistTvSeriesTab(),
+    const WatchlistMovieTab(),
   ];
 
   @override
@@ -55,6 +50,7 @@ class _WatchlistPageState extends State<WatchlistPage>
     routeObserver.subscribe(this, ModalRoute.of(context)!);
   }
 
+  @override
   void didPopNext() {
     // tv series
     Provider.of<WatchlistTvSeriesNotifier>(context, listen: false)
@@ -69,11 +65,11 @@ class _WatchlistPageState extends State<WatchlistPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Watchlist'),
+        title: const Text('Watchlist'),
         bottom: TabBar(
           controller: tabController,
           indicatorColor: kMikadoYellow,
-          tabs: [
+          tabs: const [
             Tab(text: 'Tv Series'),
             Tab(text: 'Movies'),
           ],
