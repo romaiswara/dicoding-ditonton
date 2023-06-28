@@ -24,5 +24,3 @@ dev_dependencies:
 
 flutter:
 
-  assets:
-    - assets/certificates/
