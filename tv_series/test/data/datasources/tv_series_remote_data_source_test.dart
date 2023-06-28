@@ -1,6 +1,8 @@
+import 'dart:convert';
+
 import 'package:core/core.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:tv_series/tv_series.dart';
 
@@ -9,11 +11,8 @@ import '../../helpers/test_helper.mocks.dart';
 import '../../json_reader.dart';
 
 void main() {
-  const apiKey = 'api_key=2174d146bb9c0eab47529b2e77d6b526';
-  const baseUrl = 'https://api.themoviedb.org/3';
-
   late TvSeriesRemoteDataSource dataSource;
-  late MockHttpClient mockHttpClient;
+  late MockDioClient mockDioClient;
 
   final List<TvSeries> dummyTvSeriesList = [tvSeriesTest];
   final List<TvSeries> dummyTvSeriesSearchList = [tvSeriesSearchTest];
@@ -25,17 +24,21 @@ void main() {
   const String dummyQuery = 'naruto';
 
   setUp(() {
-    mockHttpClient = MockHttpClient();
-    dataSource = TvSeriesRemoteDataSourceImpl(client: mockHttpClient);
+    mockDioClient = MockDioClient();
+    dataSource = TvSeriesRemoteDataSourceImpl(client: mockDioClient);
   });
 
   group('get airing today tv series', () {
     test('should return list of tv series when the response code is 200',
         () async {
       // arrange
-      when(mockHttpClient.get(Uri.parse('$baseUrl/tv/airing_today?$apiKey')))
-          .thenAnswer((_) async =>
-              http.Response(readJson('dummy_data/tv_series.json'), 200));
+      when(mockDioClient.get(url: '/tv/airing_today')).thenAnswer(
+        (_) async => dio.Response(
+          requestOptions: dio.RequestOptions(),
+          data: jsonDecode(readJson('dummy_data/tv_series.json')),
+          statusCode: 200,
+        ),
+      );
       // act
       final result = await dataSource.getAiringTodayTvSeries();
       // assert
@@ -45,8 +48,13 @@ void main() {
       'should throw a ServerException when when the response code is 400',
       () async {
         // arrange
-        when(mockHttpClient.get(Uri.parse('$baseUrl/tv/airing_today?$apiKey')))
-            .thenAnswer((_) async => http.Response('Not Found', 400));
+        when(mockDioClient.get(url: '/tv/airing_today')).thenAnswer(
+          (_) async => dio.Response(
+            requestOptions: dio.RequestOptions(),
+            data: 'Not Found',
+            statusCode: 400,
+          ),
+        );
         // act
         final call = await dataSource.getAiringTodayTvSeries();
         // assert
@@ -60,9 +68,13 @@ void main() {
     test('should return list of tv series when the response code is 200',
         () async {
       // arrange
-      when(mockHttpClient.get(Uri.parse('$baseUrl/tv/on_the_air?$apiKey')))
-          .thenAnswer((_) async =>
-              http.Response(readJson('dummy_data/tv_series.json'), 200));
+      when(mockDioClient.get(url: '/tv/on_the_air')).thenAnswer(
+        (_) async => dio.Response(
+          requestOptions: dio.RequestOptions(),
+          data: jsonDecode(readJson('dummy_data/tv_series.json')),
+          statusCode: 200,
+        ),
+      );
       // act
       final result = await dataSource.getOnTheAirTvSeries();
       // assert
@@ -72,8 +84,13 @@ void main() {
       'should throw a ServerException when when the response code is 400',
       () async {
         // arrange
-        when(mockHttpClient.get(Uri.parse('$baseUrl/tv/on_the_air?$apiKey')))
-            .thenAnswer((_) async => http.Response('Not Found', 400));
+        when(mockDioClient.get(url: '/tv/on_the_air')).thenAnswer(
+          (_) async => dio.Response(
+            requestOptions: dio.RequestOptions(),
+            data: 'Not Found',
+            statusCode: 400,
+          ),
+        );
         // act
         final call = await dataSource.getOnTheAirTvSeries();
         // assert
@@ -87,9 +104,13 @@ void main() {
     test('should return list of tv series when the response code is 200',
         () async {
       // arrange
-      when(mockHttpClient.get(Uri.parse('$baseUrl/tv/popular?$apiKey')))
-          .thenAnswer((_) async =>
-              http.Response(readJson('dummy_data/tv_series.json'), 200));
+      when(mockDioClient.get(url: '/tv/popular')).thenAnswer(
+        (_) async => dio.Response(
+          requestOptions: dio.RequestOptions(),
+          data: jsonDecode(readJson('dummy_data/tv_series.json')),
+          statusCode: 200,
+        ),
+      );
       // act
       final result = await dataSource.getPopularTvSeries();
       // assert
@@ -99,8 +120,13 @@ void main() {
       'should throw a ServerException when when the response code is 400',
       () async {
         // arrange
-        when(mockHttpClient.get(Uri.parse('$baseUrl/tv/popular?$apiKey')))
-            .thenAnswer((_) async => http.Response('Not Found', 400));
+        when(mockDioClient.get(url: '/tv/popular')).thenAnswer(
+          (_) async => dio.Response(
+            requestOptions: dio.RequestOptions(),
+            data: 'Not Found',
+            statusCode: 400,
+          ),
+        );
         // act
         final call = await dataSource.getPopularTvSeries();
         // assert
@@ -114,9 +140,13 @@ void main() {
     test('should return list of tv series when the response code is 200',
         () async {
       // arrange
-      when(mockHttpClient.get(Uri.parse('$baseUrl/tv/top_rated?$apiKey')))
-          .thenAnswer((_) async =>
-              http.Response(readJson('dummy_data/tv_series.json'), 200));
+      when(mockDioClient.get(url: '/tv/top_rated')).thenAnswer(
+        (_) async => dio.Response(
+          requestOptions: dio.RequestOptions(),
+          data: jsonDecode(readJson('dummy_data/tv_series.json')),
+          statusCode: 200,
+        ),
+      );
       // act
       final result = await dataSource.getTopRatedTvSeries();
       // assert
@@ -126,8 +156,13 @@ void main() {
       'should throw a ServerException when when the response code is 400',
       () async {
         // arrange
-        when(mockHttpClient.get(Uri.parse('$baseUrl/tv/top_rated?$apiKey')))
-            .thenAnswer((_) async => http.Response('Not Found', 400));
+        when(mockDioClient.get(url: '/tv/top_rated')).thenAnswer(
+          (_) async => dio.Response(
+            requestOptions: dio.RequestOptions(),
+            data: 'Not Found',
+            statusCode: 400,
+          ),
+        );
         // act
         final call = await dataSource.getTopRatedTvSeries();
         // assert
@@ -141,9 +176,13 @@ void main() {
     test('should return detail of tv series when the response code is 200',
         () async {
       // arrange
-      when(mockHttpClient.get(Uri.parse('$baseUrl/tv/$dummyId?$apiKey')))
-          .thenAnswer((_) async =>
-              http.Response(readJson('dummy_data/tv_series_detail.json'), 200));
+      when(mockDioClient.get(url: '/tv/$dummyId')).thenAnswer(
+        (_) async => dio.Response(
+          requestOptions: dio.RequestOptions(),
+          data: jsonDecode(readJson('dummy_data/tv_series_detail.json')),
+          statusCode: 200,
+        ),
+      );
       // act
       final result = await dataSource.getTvSeriesDetail(dummyId);
       // assert
@@ -153,8 +192,13 @@ void main() {
       'should throw a ServerException when when the response code is 400',
       () async {
         // arrange
-        when(mockHttpClient.get(Uri.parse('$baseUrl/tv/$dummyId?$apiKey')))
-            .thenAnswer((_) async => http.Response('Not Found', 400));
+        when(mockDioClient.get(url: '/tv/$dummyId')).thenAnswer(
+          (_) async => dio.Response(
+            requestOptions: dio.RequestOptions(),
+            data: 'Not Found',
+            statusCode: 400,
+          ),
+        );
         // act
         final call = await dataSource.getTvSeriesDetail(dummyId);
         // assert
@@ -168,10 +212,14 @@ void main() {
     test('should return list of tv series when the response code is 200',
         () async {
       // arrange
-      when(mockHttpClient
-              .get(Uri.parse('$baseUrl/tv/$dummyId/recommendations?$apiKey')))
-          .thenAnswer((_) async => http.Response(
-              readJson('dummy_data/tv_series_recommendations.json'), 200));
+      when(mockDioClient.get(url: '/tv/$dummyId/recommendations')).thenAnswer(
+        (_) async => dio.Response(
+          requestOptions: dio.RequestOptions(),
+          data:
+              jsonDecode(readJson('dummy_data/tv_series_recommendations.json')),
+          statusCode: 200,
+        ),
+      );
       // act
       final result = await dataSource.getTvSeriesRecommendations(dummyId);
       // assert
@@ -182,9 +230,13 @@ void main() {
       'should throw a ServerException when when the response code is 400',
       () async {
         // arrange
-        when(mockHttpClient
-                .get(Uri.parse('$baseUrl/tv/$dummyId/recommendations?$apiKey')))
-            .thenAnswer((_) async => http.Response('Not Found', 400));
+        when(mockDioClient.get(url: '/tv/$dummyId/recommendations')).thenAnswer(
+          (_) async => dio.Response(
+            requestOptions: dio.RequestOptions(),
+            data: 'Not Found',
+            statusCode: 400,
+          ),
+        );
         // act
         final call = await dataSource.getTvSeriesRecommendations(dummyId);
         // assert
@@ -198,10 +250,13 @@ void main() {
     test('should return list of tv series when the response code is 200',
         () async {
       // arrange
-      when(mockHttpClient
-              .get(Uri.parse('$baseUrl/search/tv?$apiKey&query=$dummyQuery')))
-          .thenAnswer((_) async => http.Response(
-              readJson('dummy_data/search_naruto_tv_series.json'), 200));
+      when(mockDioClient.get(url: '/search/tv', query: dummyQuery)).thenAnswer(
+        (_) async => dio.Response(
+          requestOptions: dio.RequestOptions(),
+          data: jsonDecode(readJson('dummy_data/search_naruto_tv_series.json')),
+          statusCode: 200,
+        ),
+      );
       // act
       final result = await dataSource.searchTvSeries(dummyQuery);
       // assert
@@ -211,9 +266,14 @@ void main() {
       'should throw a ServerException when when the response code is 400',
       () async {
         // arrange
-        when(mockHttpClient
-                .get(Uri.parse('$baseUrl/search/tv?$apiKey&query=$dummyQuery')))
-            .thenAnswer((_) async => http.Response('Not Found', 400));
+        when(mockDioClient.get(url: '/search/tv', query: dummyQuery))
+            .thenAnswer(
+          (_) async => dio.Response(
+            requestOptions: dio.RequestOptions(),
+            data: 'Not Found',
+            statusCode: 400,
+          ),
+        );
         // act
         final call = await dataSource.searchTvSeries(dummyQuery);
         // assert
