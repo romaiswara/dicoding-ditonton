@@ -1,65 +1,83 @@
-import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:movie/movie.dart';
-import 'package:provider/provider.dart';
 
 import '../../dummy_data/dummy_objects.dart';
 import 'popular_movies_page_test.mocks.dart';
 
-@GenerateMocks([PopularMoviesNotifier])
+@GenerateNiceMocks([
+  MockSpec<PopularMoviesCubit>(
+    as: #MockPopularMoviesCubit,
+    onMissingStub: OnMissingStub.returnDefault,
+  )
+])
 void main() {
-  late MockPopularMoviesNotifier mockNotifier;
+  late MockPopularMoviesCubit mockPopularMoviesCubit;
 
   setUp(() {
-    mockNotifier = MockPopularMoviesNotifier();
+    mockPopularMoviesCubit = MockPopularMoviesCubit();
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return ChangeNotifierProvider<PopularMoviesNotifier>.value(
-      value: mockNotifier,
+    return BlocProvider<PopularMoviesCubit>.value(
+      value: mockPopularMoviesCubit,
       child: MaterialApp(
         home: body,
       ),
     );
   }
 
-  testWidgets('Page should display center progress bar when loading',
+  testWidgets('Page should display progress bar when loading',
       (WidgetTester tester) async {
-    when(mockNotifier.state).thenReturn(RequestState.Loading);
+    when(mockPopularMoviesCubit.state).thenReturn(const LoadingState());
 
-    final progressBarFinder = find.byType(CircularProgressIndicator);
+    final progressFinder = find.byType(CircularProgressIndicator);
     final centerFinder = find.byType(Center);
 
     await tester.pumpWidget(_makeTestableWidget(const PopularMoviesPage()));
 
     expect(centerFinder, findsOneWidget);
-    expect(progressBarFinder, findsOneWidget);
+    expect(progressFinder, findsOneWidget);
   });
 
-  testWidgets('Page should display ListView when data is loaded',
+  testWidgets('Page should display `Terjadi kesalahan!` when error',
       (WidgetTester tester) async {
-    when(mockNotifier.state).thenReturn(RequestState.Loaded);
-    when(mockNotifier.movies).thenReturn(<Movie>[testMovie]);
+    when(mockPopularMoviesCubit.state).thenReturn(const ErrorState());
+
+    final errorFinder = find.text('Terjadi kesalahan!');
+    final centerFinder = find.byType(Center);
+
+    await tester.pumpWidget(_makeTestableWidget(const PopularMoviesPage()));
+
+    expect(centerFinder, findsOneWidget);
+    expect(errorFinder, findsOneWidget);
+  });
+
+  testWidgets('Page should display `Tidak ada data!` when error',
+      (WidgetTester tester) async {
+    when(mockPopularMoviesCubit.state).thenReturn(const EmptyState());
+
+    final noDataFinder = find.text('Tidak ada data!');
+    final centerFinder = find.byType(Center);
+
+    await tester.pumpWidget(_makeTestableWidget(const PopularMoviesPage()));
+
+    expect(centerFinder, findsOneWidget);
+    expect(noDataFinder, findsOneWidget);
+  });
+
+  testWidgets('Page should display when data is loaded',
+      (WidgetTester tester) async {
+    when(mockPopularMoviesCubit.state)
+        .thenReturn(LoadedState(data: [testMovie]));
 
     final listViewFinder = find.byType(ListView);
 
     await tester.pumpWidget(_makeTestableWidget(const PopularMoviesPage()));
 
     expect(listViewFinder, findsOneWidget);
-  });
-
-  testWidgets('Page should display text with message when Error',
-      (WidgetTester tester) async {
-    when(mockNotifier.state).thenReturn(RequestState.Error);
-    when(mockNotifier.message).thenReturn('Error message');
-
-    final textFinder = find.byKey(const Key('error_message'));
-
-    await tester.pumpWidget(_makeTestableWidget(const PopularMoviesPage()));
-
-    expect(textFinder, findsOneWidget);
   });
 }
