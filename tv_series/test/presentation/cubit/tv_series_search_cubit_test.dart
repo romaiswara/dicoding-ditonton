@@ -62,7 +62,7 @@ void main() {
     build: () => cubit,
     act: (cubit) {
       when(mockSearchTvSeries.execute(dummyQuery))
-          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+          .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
 
       return cubit.get(query: dummyQuery);
     },

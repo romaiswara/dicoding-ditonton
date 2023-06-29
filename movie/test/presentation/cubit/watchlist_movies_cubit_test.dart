@@ -61,7 +61,7 @@ void main() {
     build: () => cubit,
     act: (cubit) {
       when(mockGetWatchlistMovies.execute())
-          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+          .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
 
       return cubit.get();
     },

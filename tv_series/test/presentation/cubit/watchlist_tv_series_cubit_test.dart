@@ -61,7 +61,7 @@ void main() {
     build: () => cubit,
     act: (cubit) {
       when(mockGetWatchlistTvSeries.execute())
-          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+          .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
 
       return cubit.get();
     },
@@ -69,4 +69,5 @@ void main() {
       const LoadingState<List<TvSeries>>(),
       const ErrorState<List<TvSeries>>(message: 'Server Failure'),
     ],
-  );}
+  );
+}

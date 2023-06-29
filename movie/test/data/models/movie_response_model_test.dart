@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:movie/movie.dart';
 
-import 'package:movie/movie.dart';
-
 import '../../json_reader.dart';
 
 void main() {

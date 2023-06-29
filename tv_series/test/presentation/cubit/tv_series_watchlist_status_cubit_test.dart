@@ -14,7 +14,6 @@ void main() {
 
   const int dummyId = 37854;
   const TvSeries dummyTvSeries = tvSeriesTest;
-  final List<TvSeries> dummyTvSeriesList = [dummyTvSeries];
 
   setUp(() {
     mockGetWatchListTvSeriesStatus = MockGetWatchListTvSeriesStatus();

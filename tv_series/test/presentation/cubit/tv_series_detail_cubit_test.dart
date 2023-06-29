@@ -63,7 +63,7 @@ void main() {
           .thenAnswer((_) async => const Right(dummyTvSeriesDetail));
 
       when(mockGetTvSeriesRecommendations.execute(dummyId))
-          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+          .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
 
       return cubit.get(id: dummyId);
     },
@@ -78,7 +78,7 @@ void main() {
     build: () => cubit,
     act: (cubit) {
       when(mockGetTvSeriesDetail.execute(dummyId))
-          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+          .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
 
       when(mockGetTvSeriesRecommendations.execute(dummyId))
           .thenAnswer((_) async => Right(dummyTvSeriesRecommendationList));

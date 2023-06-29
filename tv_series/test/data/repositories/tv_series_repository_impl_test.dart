@@ -91,7 +91,7 @@ void main() {
 
       // assert
       verify(mockTvSeriesRemoteDataSource.getAiringTodayTvSeries());
-      expect(result, equals(Left(ServerFailure(''))));
+      expect(result, equals(const Left(ServerFailure(''))));
     });
 
     test(
@@ -106,8 +106,10 @@ void main() {
 
       // assert
       verify(mockTvSeriesRemoteDataSource.getAiringTodayTvSeries());
-      expect(result,
-          equals(Left(ConnectionFailure('Failed to connect to the network'))));
+      expect(
+          result,
+          equals(const Left(
+              ConnectionFailure('Failed to connect to the network'))));
     });
   });
 
@@ -140,7 +142,7 @@ void main() {
 
       // assert
       verify(mockTvSeriesRemoteDataSource.getOnTheAirTvSeries());
-      expect(result, equals(Left(ServerFailure(''))));
+      expect(result, equals(const Left(ServerFailure(''))));
     });
 
     test(
@@ -155,8 +157,10 @@ void main() {
 
       // assert
       verify(mockTvSeriesRemoteDataSource.getOnTheAirTvSeries());
-      expect(result,
-          equals(Left(ConnectionFailure('Failed to connect to the network'))));
+      expect(
+          result,
+          equals(const Left(
+              ConnectionFailure('Failed to connect to the network'))));
     });
   });
 
@@ -189,7 +193,7 @@ void main() {
 
       // assert
       verify(mockTvSeriesRemoteDataSource.getPopularTvSeries());
-      expect(result, equals(Left(ServerFailure(''))));
+      expect(result, equals(const Left(ServerFailure(''))));
     });
 
     test(
@@ -204,8 +208,10 @@ void main() {
 
       // assert
       verify(mockTvSeriesRemoteDataSource.getPopularTvSeries());
-      expect(result,
-          equals(Left(ConnectionFailure('Failed to connect to the network'))));
+      expect(
+          result,
+          equals(const Left(
+              ConnectionFailure('Failed to connect to the network'))));
     });
   });
 
@@ -238,7 +244,7 @@ void main() {
 
       // assert
       verify(mockTvSeriesRemoteDataSource.getTopRatedTvSeries());
-      expect(result, equals(Left(ServerFailure(''))));
+      expect(result, equals(const Left(ServerFailure(''))));
     });
 
     test(
@@ -253,8 +259,10 @@ void main() {
 
       // assert
       verify(mockTvSeriesRemoteDataSource.getTopRatedTvSeries());
-      expect(result,
-          equals(Left(ConnectionFailure('Failed to connect to the network'))));
+      expect(
+          result,
+          equals(const Left(
+              ConnectionFailure('Failed to connect to the network'))));
     });
   });
 
@@ -287,7 +295,7 @@ void main() {
 
       // assert
       verify(mockTvSeriesRemoteDataSource.getTvSeriesDetail(dummyId));
-      expect(result, equals(Left(ServerFailure(''))));
+      expect(result, equals(const Left(ServerFailure(''))));
     });
 
     test(
@@ -302,8 +310,10 @@ void main() {
 
       // assert
       verify(mockTvSeriesRemoteDataSource.getTvSeriesDetail(dummyId));
-      expect(result,
-          equals(Left(ConnectionFailure('Failed to connect to the network'))));
+      expect(
+          result,
+          equals(const Left(
+              ConnectionFailure('Failed to connect to the network'))));
     });
   });
 
@@ -336,7 +346,7 @@ void main() {
 
       // assert
       verify(mockTvSeriesRemoteDataSource.getTvSeriesRecommendations(dummyId));
-      expect(result, equals(Left(ServerFailure(''))));
+      expect(result, equals(const Left(ServerFailure(''))));
     });
 
     test(
@@ -351,8 +361,10 @@ void main() {
 
       // assert
       verify(mockTvSeriesRemoteDataSource.getTvSeriesRecommendations(dummyId));
-      expect(result,
-          equals(Left(ConnectionFailure('Failed to connect to the network'))));
+      expect(
+          result,
+          equals(const Left(
+              ConnectionFailure('Failed to connect to the network'))));
     });
   });
 
@@ -385,7 +397,7 @@ void main() {
 
       // assert
       verify(mockTvSeriesRemoteDataSource.searchTvSeries(dummyQuery));
-      expect(result, equals(Left(ServerFailure(''))));
+      expect(result, equals(const Left(ServerFailure(''))));
     });
 
     test(
@@ -400,8 +412,10 @@ void main() {
 
       // assert
       verify(mockTvSeriesRemoteDataSource.searchTvSeries(dummyQuery));
-      expect(result,
-          equals(Left(ConnectionFailure('Failed to connect to the network'))));
+      expect(
+          result,
+          equals(const Left(
+              ConnectionFailure('Failed to connect to the network'))));
     });
   });
 
@@ -471,7 +485,7 @@ void main() {
           await repository.saveWatchlistTvSeries(dummyTvSeriesTable.toJson());
 
       // assert
-      expect(result, Left(DatabaseFailure('Failed to add watchlist')));
+      expect(result, const Left(DatabaseFailure('Failed to add watchlist')));
     });
   });
 
@@ -499,7 +513,7 @@ void main() {
           await repository.removeWatchlistTvSeries(dummyTvSeriesTable.id);
 
       // assert
-      expect(result, Left(DatabaseFailure('Failed to remove watchlist')));
+      expect(result, const Left(DatabaseFailure('Failed to remove watchlist')));
     });
   });
 }

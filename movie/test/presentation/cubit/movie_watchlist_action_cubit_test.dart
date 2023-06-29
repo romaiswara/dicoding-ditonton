@@ -51,7 +51,7 @@ void main() {
     act: (cubit) {
       MovieTable movieTable = MovieTable.fromEntity(dummyMovieDetail);
       when(mockSaveWatchlistMovie.execute(movieTable.toJson()))
-          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+          .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
 
       return cubit.add(detail: dummyMovieDetail);
     },
@@ -81,7 +81,7 @@ void main() {
     build: () => cubit,
     act: (cubit) {
       when(mockRemoveWatchlistMovie.execute(dummyId))
-          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+          .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
 
       return cubit.remove(id: dummyId);
     },

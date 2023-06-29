@@ -14,7 +14,6 @@ void main() {
 
   const int dummyId = 1;
   final Movie dummyMovie = testMovie;
-  final List<Movie> dummyMovieList = [dummyMovie];
 
   setUp(() {
     mockGetWatchListStatus = MockGetWatchListStatus();

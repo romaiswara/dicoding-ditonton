@@ -53,7 +53,7 @@ void main() {
       TvSeriesTable tvSeriesTable =
           TvSeriesTable.fromEntity(dummyTvSeriesDetail);
       when(mockSaveWatchlistTvSeries.execute(tvSeriesTable.toJson()))
-          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+          .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
 
       return cubit.add(detail: dummyTvSeriesDetail);
     },
@@ -83,7 +83,7 @@ void main() {
     build: () => cubit,
     act: (cubit) {
       when(mockRemoveWatchlistTvSeries.execute(dummyId))
-          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+          .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
 
       return cubit.remove(id: dummyId);
     },
