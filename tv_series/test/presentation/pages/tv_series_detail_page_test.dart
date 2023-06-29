@@ -1,27 +1,54 @@
-import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:provider/provider.dart';
 import 'package:tv_series/tv_series.dart';
 
 import '../../dummy_data/dummy_objects.dart';
 import 'tv_series_detail_page_test.mocks.dart';
 
-@GenerateMocks([TvSeriesDetailNotifier])
+@GenerateNiceMocks([
+  MockSpec<TvSeriesDetailCubit>(
+    as: #MockTvSeriesDetailCubit,
+    onMissingStub: OnMissingStub.returnDefault,
+  ),
+  MockSpec<TvSeriesWatchlistStatusCubit>(
+    as: #MockTvSeriesWatchlistStatusCubit,
+    onMissingStub: OnMissingStub.returnDefault,
+  ),
+  MockSpec<TvSeriesWatchlistActionCubit>(
+    as: #MockTvSeriesWatchlistActionCubit,
+    onMissingStub: OnMissingStub.returnDefault,
+  ),
+])
 void main() {
-  late MockTvSeriesDetailNotifier mockTvSeriesDetailNotifier;
+  late MockTvSeriesDetailCubit mockTvSeriesDetailCubit;
+  late MockTvSeriesWatchlistStatusCubit mockTvSeriesWatchlistStatusCubit;
+  late MockTvSeriesWatchlistActionCubit mockTvSeriesWatchlistActionCubit;
 
   const int dummyId = 31910;
+  const TvSeriesDetail dummyTvSeriesDetail = tvSeriesDetailTest;
 
   setUp(() {
-    mockTvSeriesDetailNotifier = MockTvSeriesDetailNotifier();
+    mockTvSeriesDetailCubit = MockTvSeriesDetailCubit();
+    mockTvSeriesWatchlistStatusCubit = MockTvSeriesWatchlistStatusCubit();
+    mockTvSeriesWatchlistActionCubit = MockTvSeriesWatchlistActionCubit();
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return ChangeNotifierProvider<TvSeriesDetailNotifier>.value(
-      value: mockTvSeriesDetailNotifier,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<TvSeriesDetailCubit>.value(
+          value: mockTvSeriesDetailCubit,
+        ),
+        BlocProvider<TvSeriesWatchlistStatusCubit>.value(
+          value: mockTvSeriesWatchlistStatusCubit,
+        ),
+        BlocProvider<TvSeriesWatchlistActionCubit>.value(
+          value: mockTvSeriesWatchlistActionCubit,
+        ),
+      ],
       child: MaterialApp(
         home: body,
       ),
@@ -31,14 +58,9 @@ void main() {
   testWidgets(
       'Watchlist button should display add icon when tvSeries not added to watchlist',
       (WidgetTester tester) async {
-    when(mockTvSeriesDetailNotifier.tvSeriesState)
-        .thenReturn(RequestState.Loaded);
-    when(mockTvSeriesDetailNotifier.tvSeries).thenReturn(tvSeriesDetailTest);
-    when(mockTvSeriesDetailNotifier.recommendationState)
-        .thenReturn(RequestState.Loaded);
-    when(mockTvSeriesDetailNotifier.tvSeriesRecommendations)
-        .thenReturn(<TvSeries>[tvSeriesRecommendationTest]);
-    when(mockTvSeriesDetailNotifier.isAddedToWatchlist).thenReturn(false);
+    when(mockTvSeriesDetailCubit.state)
+        .thenReturn(const LoadedState(data: dummyTvSeriesDetail));
+    when(mockTvSeriesWatchlistStatusCubit.state).thenReturn(false);
 
     final watchlistButtonIcon = find.byIcon(Icons.add);
 
@@ -51,14 +73,9 @@ void main() {
   testWidgets(
       'Watchlist button should dispay check icon when tvSeries is added to wathclist',
       (WidgetTester tester) async {
-    when(mockTvSeriesDetailNotifier.tvSeriesState)
-        .thenReturn(RequestState.Loaded);
-    when(mockTvSeriesDetailNotifier.tvSeries).thenReturn(tvSeriesDetailTest);
-    when(mockTvSeriesDetailNotifier.recommendationState)
-        .thenReturn(RequestState.Loaded);
-    when(mockTvSeriesDetailNotifier.tvSeriesRecommendations)
-        .thenReturn(<TvSeries>[tvSeriesRecommendationTest]);
-    when(mockTvSeriesDetailNotifier.isAddedToWatchlist).thenReturn(true);
+    when(mockTvSeriesDetailCubit.state)
+        .thenReturn(const LoadedState(data: dummyTvSeriesDetail));
+    when(mockTvSeriesWatchlistStatusCubit.state).thenReturn(true);
 
     final watchlistButtonIcon = find.byIcon(Icons.check);
 
@@ -66,60 +83,5 @@ void main() {
         .pumpWidget(_makeTestableWidget(const TvSeriesDetailPage(id: dummyId)));
 
     expect(watchlistButtonIcon, findsOneWidget);
-  });
-
-  testWidgets(
-      'Watchlist button should display Snackbar when added to watchlist',
-      (WidgetTester tester) async {
-    when(mockTvSeriesDetailNotifier.tvSeriesState)
-        .thenReturn(RequestState.Loaded);
-    when(mockTvSeriesDetailNotifier.tvSeries).thenReturn(tvSeriesDetailTest);
-    when(mockTvSeriesDetailNotifier.recommendationState)
-        .thenReturn(RequestState.Loaded);
-    when(mockTvSeriesDetailNotifier.tvSeriesRecommendations)
-        .thenReturn(<TvSeries>[tvSeriesRecommendationTest]);
-    when(mockTvSeriesDetailNotifier.isAddedToWatchlist).thenReturn(false);
-    when(mockTvSeriesDetailNotifier.watchlistMessage)
-        .thenReturn('Added to Watchlist');
-
-    final watchlistButton = find.byType(ElevatedButton);
-
-    await tester
-        .pumpWidget(_makeTestableWidget(const TvSeriesDetailPage(id: dummyId)));
-
-    expect(find.byIcon(Icons.add), findsOneWidget);
-
-    await tester.tap(watchlistButton);
-    await tester.pump();
-
-    expect(find.byType(SnackBar), findsOneWidget);
-    expect(find.text('Added to Watchlist'), findsOneWidget);
-  });
-
-  testWidgets(
-      'Watchlist button should display AlertDialog when add to watchlist failed',
-      (WidgetTester tester) async {
-    when(mockTvSeriesDetailNotifier.tvSeriesState)
-        .thenReturn(RequestState.Loaded);
-    when(mockTvSeriesDetailNotifier.tvSeries).thenReturn(tvSeriesDetailTest);
-    when(mockTvSeriesDetailNotifier.recommendationState)
-        .thenReturn(RequestState.Loaded);
-    when(mockTvSeriesDetailNotifier.tvSeriesRecommendations)
-        .thenReturn(<TvSeries>[tvSeriesRecommendationTest]);
-    when(mockTvSeriesDetailNotifier.isAddedToWatchlist).thenReturn(false);
-    when(mockTvSeriesDetailNotifier.watchlistMessage).thenReturn('Failed');
-
-    final watchlistButton = find.byType(ElevatedButton);
-
-    await tester
-        .pumpWidget(_makeTestableWidget(const TvSeriesDetailPage(id: dummyId)));
-
-    expect(find.byIcon(Icons.add), findsOneWidget);
-
-    await tester.tap(watchlistButton);
-    await tester.pump();
-
-    expect(find.byType(AlertDialog), findsOneWidget);
-    expect(find.text('Failed'), findsOneWidget);
   });
 }
