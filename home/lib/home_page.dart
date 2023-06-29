@@ -1,7 +1,8 @@
 import 'package:core/core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie/movie.dart';
-import 'package:provider/provider.dart';
 import 'package:tv_series/tv_series.dart';
 
 class HomePage extends StatefulWidget {
@@ -90,6 +91,13 @@ class _HomePageState extends State<HomePage> {
               },
               leading: const Icon(Icons.info_outline),
               title: const Text('About'),
+            ),
+            ListTile(
+              onTap: () {
+                FirebaseCrashlytics.instance.crash();
+              },
+              leading: const Icon(Icons.bug_report),
+              title: const Text('Test Crash'),
             ),
           ],
         ),

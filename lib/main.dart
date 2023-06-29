@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:about/about.dart';
 import 'package:core/core.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +15,7 @@ import 'package:watchlist/watchlist.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  /// 45, 45, 45, 45, 45, 66, 69
+  await Firebase.initializeApp();
 
   final sslCert = await rootBundle.load('assets/certificates/certificates.cer');
   final SecurityContext securityContext =
